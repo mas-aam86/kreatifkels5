@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelas Kreatif 5 - Portal Belajar Interaktif</title>
+    <!-- Tailwind CSS untuk Desain yang Cepat dan Responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons untuk Ikon yang Menarik -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Fredoka untuk kesan ceria anak-anak -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f0fdf4; /* Light green-blue playful background */
+        }
+        h1, h2, h3, .font-kids {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* Custom scrollbar untuk kenyamanan visual */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cerianing: '#FF9F1C',  /* Orange ceria */
+                        biruawan: '#2EC4B6',  /* Tosca segar */
+                        merahceri: '#FF4D6D',  /* Ceri pink */
+                        kuningmadu: '#FFD166', /* Kuning madu */
+                        ungulucu: '#7209B7',   /* Ungu soft */
+                        daunmuda: '#4C9A2A'    /* Hijau daun */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- HEADER / NAVIGASI UTAMA -->
+    <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-biruawan">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Maskot -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="bg-biruawan text-white p-2.5 rounded-2xl shadow-md transform hover:rotate-6 transition duration-300">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800 tracking-wide">Kelas <span class="text-biruawan">Kreatif 5</span></h1>
+                        <p class="text-xs text-slate-500 font-semibold tracking-wider">Bersama Belajar, Bersama Hebat! 🌟</p>
+                    </div>
+                </div>
+
+                <!-- Navigasi Menu Desktop -->
+                <nav class="hidden md:flex items-center space-x-2">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active-nav flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition duration-200 text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="home" class="w-5 h-5 text-biruawan"></i> Beranda
+                    </button>
+                    <button onclick="switchTab('mapel')" id="nav-mapel" class="nav-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition duration-200 text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="book-open" class="w-5 h-5 text-cerianing"></i> Mata Pelajaran
+                    </button>
+                    <button onclick="switchTab('tentang')" id="nav-tentang" class="nav-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition duration-200 text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="info" class="w-5 h-5 text-merahceri"></i> Tentang Guru
+                    </button>
+                    <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition duration-200 text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="user-cog" class="w-5 h-5 text-ungulucu"></i> Panel Guru
+                    </button>
+                    <button onclick="switchTab('bantuan')" id="nav-bantuan" class="nav-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition duration-200 text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="help-circle" class="w-5 h-5 text-daunmuda"></i> Bantuan
+                    </button>
+                </nav>
+
+                <!-- Skor Akumulasi Anak (Gamifikasi) -->
+                <div class="flex items-center gap-2 bg-yellow-100 border-2 border-yellow-300 px-4 py-2 rounded-2xl shadow-sm">
+                    <span class="text-xl">⭐</span>
+                    <span id="student-score" class="font-bold text-slate-800 text-sm md:text-base">0 Poin</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigasi Menu Mobile -->
+        <div class="md:hidden flex justify-around bg-slate-50 border-t border-slate-200 py-2">
+            <button onclick="switchTab('dashboard')" class="flex flex-col items-center text-slate-600 hover:text-biruawan">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Beranda</span>
+            </button>
+            <button onclick="switchTab('mapel')" class="flex flex-col items-center text-slate-600 hover:text-cerianing">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Belajar</span>
+            </button>
+            <button onclick="switchTab('tentang')" class="flex flex-col items-center text-slate-600 hover:text-merahceri">
+                <i data-lucide="info" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Tentang</span>
+            </button>
+            <button onclick="switchTab('admin')" class="flex flex-col items-center text-slate-600 hover:text-ungulucu">
+                <i data-lucide="user-cog" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Guru</span>
+            </button>
+            <button onclick="switchTab('bantuan')" class="flex flex-col items-center text-slate-600 hover:text-daunmuda">
+                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Bantuan</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- NOTIFIKASI POPUP CUSTOM (Mengganti alert browser) -->
+    <div id="custom-toast" class="fixed bottom-5 right-5 z-[100] transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-800 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border-2 border-biruawan">
+            <div id="toast-icon" class="bg-biruawan p-1.5 rounded-lg text-white">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <p id="toast-message" class="font-bold text-sm">Hebat! Kamu berhasil menjawab kuis.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN KONTEN -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: DASHBOARD (BERANDA) -->
+        <section id="tab-dashboard" class="tab-content block space-y-8 animate-fade-in">
+            <!-- Banner Utama Selamat Datang -->
+            <div class="relative bg-gradient-to-r from-biruawan via-sky-500 to-indigo-500 rounded-3xl p-6 sm:p-10 text-white shadow-xl overflow-hidden">
+                <!-- Ornamen Awan di Background -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+                <div class="absolute -bottom-10 -left-10 w-52 h-52 bg-white opacity-10 rounded-full"></div>
+                
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-yellow-300 text-slate-800 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">🌟 Selamat Datang, Sahabat Kreatif!</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-4 leading-tight">Siap Menjelajah Dunia Ilmu Pengetahuan Hari Ini?</h2>
+                    <p class="text-sm sm:text-lg mt-3 text-slate-100 font-medium">Temukan beragam materi seru, video animasi interaktif, rangkuman materi ceria, serta kuis seru berhadiah lencana bintang!</p>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button onclick="switchTab('mapel')" class="bg-white text-biruawan hover:bg-yellow-100 font-bold px-6 py-3 rounded-2xl shadow-md transition transform hover:-translate-y-1 flex items-center gap-2">
+                            <i data-lucide="play" class="w-5 h-5 fill-current"></i> Mulai Belajar Sekarang
+                        </button>
+                        <button onclick="switchTab('bantuan')" class="bg-biruawan/30 hover:bg-biruawan/50 border border-white/40 text-white font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2">
+                            <i data-lucide="help-circle" class="w-5 h-5"></i> Cara Belajar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Statistik Singkat (Anak-anak) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Kartu Pencapaian Kuis -->
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm flex items-center gap-5 hover:border-biruawan transition duration-300">
+                    <div class="bg-teal-100 p-4 rounded-2xl text-biruawan">
+                        <i data-lucide="award" class="w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide">Misi Terselesaikan</h3>
+                        <p id="stats-completed" class="text-2xl font-black text-slate-800">0 Materi</p>
+                        <span class="text-xs text-slate-400">Terus tingkatkan belajarmu!</span>
+                    </div>
+                </div>
+                <!-- Kartu Lencana -->
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm flex items-center gap-5 hover:border-cerianing transition duration-300">
+                    <div class="bg-orange-100 p-4 rounded-2xl text-cerianing">
+                        <i data-lucide="trophy" class="w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide">Lencana Diperoleh</h3>
+                        <p id="stats-badge" class="text-2xl font-black text-slate-800">Pemula Berbakat</p>
+                        <span class="text-xs text-slate-400">Maju terus ke lencana berikutnya!</span>
+                    </div>
+                </div>
+                <!-- Kartu Status Keaktifan -->
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm flex items-center gap-5 hover:border-merahceri transition duration-300">
+                    <div class="bg-pink-100 p-4 rounded-2xl text-merahceri">
+                        <i data-lucide="flame" class="w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide">Status Belajar</h3>
+                        <p class="text-2xl font-black text-slate-800">Sangat Aktif 🔥</p>
+                        <span class="text-xs text-slate-400">Kamu sedang giat-giatnya belajar!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rekomendasi Mata Pelajaran Utama -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">📚 Pilih Pelajaran Favoritmu</h2>
+                        <p class="text-sm text-slate-500 font-semibold mt-1">Klik salah satu mata pelajaran di bawah untuk mulai berpetualang.</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="subject-cards-container">
+                    <!-- Cards will be populated dynamically from JavaScript structure -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: MATA PELAJARAN (MATERI UTAMA) -->
+        <section id="tab-mapel" class="tab-content hidden space-y-6 animate-fade-in">
+            <!-- Navigasi Belajar: Kiri (Daftar Pelajaran & Bab) - Kanan (Tampilan Materi) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Samping Kiri: Daftar Navigasi Belajar -->
+                <div class="lg:col-span-4 space-y-4">
+                    <!-- Pemilih Pelajaran Cepat -->
+                    <div class="bg-white p-5 rounded-3xl border-2 border-slate-100 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="book-marked" class="text-biruawan w-5 h-5"></i> Pilih Pelajaran:
+                        </h3>
+                        <div class="flex flex-wrap gap-2" id="subject-selectors">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Daftar Bab & Judul Materi -->
+                    <div class="bg-white p-5 rounded-3xl border-2 border-slate-100 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="layers" class="text-cerianing w-5 h-5"></i> Bab & Materi Tersedia:
+                        </h3>
+                        <div id="chapters-list" class="space-y-4 max-h-[450px] overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Samping Kanan: Ruang Baca & Eksplorasi Media -->
+                <div class="lg:col-span-8 bg-white rounded-3xl border-2 border-slate-100 shadow-sm p-6 sm:p-8 min-h-[500px] flex flex-col justify-between" id="material-content-view">
+                    <!-- Default state / Belum ada materi dipilih -->
+                    <div id="material-placeholder" class="flex flex-col items-center justify-center text-center my-auto py-12">
+                        <div class="bg-yellow-100 text-yellow-500 p-6 rounded-full mb-4 animate-bounce">
+                            <i data-lucide="sparkles" class="w-12 h-12"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800">Petualanganmu Menunggumu!</h3>
+                        <p class="text-sm text-slate-500 mt-2 max-w-sm">Pilih mata pelajaran, bab, dan materi di bilah sebelah kiri untuk mulai membaca, menonton, atau mengerjakan kuis.</p>
+                    </div>
+
+                    <!-- Konten Materi Utama (Disembunyikan secara default) -->
+                    <div id="material-details" class="hidden space-y-6">
+                        <!-- Header Materi -->
+                        <div class="border-b border-slate-100 pb-4">
+                            <span id="lesson-badge" class="bg-biruawan text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Pelajari</span>
+                            <h2 id="lesson-title" class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">-- Judul Materi --</h2>
+                            <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-bold mt-2">
+                                <span class="flex items-center gap-1"><i data-lucide="book" class="w-4 h-4 text-cerianing"></i> <span id="lesson-subject-name">-- Mapel --</span></span>
+                                <span class="flex items-center gap-1"><i data-lucide="file-text" class="w-4 h-4 text-biruawan"></i> <span id="lesson-chapter-name">-- Bab --</span></span>
+                                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4 text-merahceri"></i> <span id="lesson-time">5 Menit Belajar</span></span>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC MEDIA FORMAT CONTAINER -->
+                        <div id="media-container" class="space-y-4">
+                            <!-- Teks Bacaan Bergambar -->
+                            <div id="media-text-section" class="hidden prose prose-slate max-w-none text-slate-700 leading-relaxed text-sm sm:text-base">
+                                <!-- Konten Teks -->
+                            </div>
+
+                            <!-- Simulasi Pemutar Video Interaktif -->
+                            <div id="media-video-section" class="hidden">
+                                <div class="relative bg-slate-900 aspect-video rounded-2xl overflow-hidden flex flex-col items-center justify-center text-white border-4 border-slate-800 shadow-inner">
+                                    <!-- Thumbnail Guru Digital -->
+                                    <div id="video-thumbnail" class="absolute inset-0 bg-cover bg-center flex flex-col items-center justify-center p-6 bg-slate-800 bg-opacity-70">
+                                        <div class="bg-white/20 hover:bg-white/30 p-5 rounded-full backdrop-blur-md cursor-pointer transition transform hover:scale-110 shadow-lg text-yellow-300" onclick="playMockVideo()">
+                                            <i data-lucide="play" class="w-12 h-12 fill-current"></i>
+                                        </div>
+                                        <p class="mt-4 font-bold text-sm sm:text-base text-center max-w-md">Klik untuk Putar Video Animasi Pembelajaran Interaktif</p>
+                                    </div>
+                                    <!-- Mock Video Progress / Interface -->
+                                    <div id="video-playing" class="hidden w-full h-full flex flex-col justify-between p-4 bg-gradient-to-b from-slate-950/20 to-slate-950/90">
+                                        <div class="flex justify-between items-center">
+                                            <span class="bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-white animate-ping"></span> LIVE SIMULATION</span>
+                                            <button onclick="stopMockVideo()" class="text-white hover:text-red-400 bg-white/10 p-1.5 rounded-lg"><i data-lucide="x" class="w-4 h-4"></i></button>
+                                        </div>
+                                        
+                                        <!-- Simulasi Konten Animasi Menggunakan CSS & Text -->
+                                        <div class="my-auto text-center space-y-3">
+                                            <div class="inline-block animate-bounce text-6xl" id="video-emoji-anim">🎒</div>
+                                            <p id="video-subtitle" class="text-sm sm:text-lg font-extrabold text-yellow-300 drop-shadow-md">"Tahukah kamu, udara masuk melalui hidung..."</p>
+                                        </div>
+
+                                        <div class="space-y-1">
+                                            <div class="h-2 bg-white/30 rounded-full overflow-hidden">
+                                                <div id="video-progress-bar" class="h-full bg-biruawan w-1/3 transition-all duration-300"></div>
+                                            </div>
+                                            <div class="flex justify-between text-[11px] font-bold text-slate-300">
+                                                <span>01:15 / 03:45</span>
+                                                <span>Resolusi HD 1080p</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2 italic text-center">Video interaktif ini menyajikan konsep rumit dalam gaya kartun yang seru!</p>
+                            </div>
+
+                            <!-- Simulasi Pemutar Podcast / Audio Membaca -->
+                            <div id="media-audio-section" class="hidden bg-indigo-50 border-2 border-indigo-200 p-6 rounded-2xl flex flex-col md:flex-row items-center gap-4">
+                                <div class="bg-indigo-600 text-white p-4 rounded-full flex-shrink-0 animate-pulse">
+                                    <i data-lucide="mic" class="w-8 h-8"></i>
+                                </div>
+                                <div class="flex-grow w-full">
+                                    <h4 class="font-bold text-indigo-950 text-sm md:text-base">Dengarkan Dongeng & Penjelasan Materi:</h4>
+                                    <p class="text-xs text-indigo-700">Audio narasi oleh Guru untuk membantu pendengaranmu belajar mandiri.</p>
+                                    
+                                    <!-- Mock Player Controls -->
+                                    <div class="mt-4 flex items-center gap-4 bg-white p-3 rounded-xl border border-indigo-100 shadow-sm">
+                                        <button onclick="toggleAudioMock()" id="audio-play-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-lg transition">
+                                            <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                                        </button>
+                                        <div class="flex-grow">
+                                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                                <div id="audio-progress-bar" class="h-full bg-indigo-600 w-0 transition-all duration-300"></div>
+                                            </div>
+                                        </div>
+                                        <span id="audio-time" class="text-xs font-bold text-slate-500">00:00 / 02:30</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Kuis Interaktif Menyenangkan -->
+                            <div id="media-quiz-section" class="hidden bg-amber-50 border-2 border-amber-200 p-6 rounded-2xl space-y-4">
+                                <div class="flex items-center gap-2 text-amber-800">
+                                    <i data-lucide="sparkles" class="w-6 h-6 animate-spin"></i>
+                                    <h3 class="font-bold text-lg">Waktunya Asah Otak! Kuis Seru!</h3>
+                                </div>
+                                <div id="quiz-question-container" class="space-y-4">
+                                    <!-- Pertanyaan & Pilihan Jawaban via JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tombol "Selesai Membaca & Dapatkan Poin" -->
+                        <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                            <button id="mark-complete-btn" onclick="completeCurrentLesson()" class="bg-biruawan hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition transform hover:-translate-y-1 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i> Selesai Pelajari & Raih +10 ⭐
+                            </button>
+                            <span id="lesson-status-badge" class="hidden text-emerald-600 font-bold flex items-center gap-1.5 bg-emerald-50 px-4 py-2 rounded-xl text-xs sm:text-sm">
+                                <i data-lucide="check" class="w-5 h-5 bg-emerald-500 text-white rounded-full p-0.5"></i> Materi Selesai Dipelajari
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: TENTANG GURU (FILOSOFI DIGITAL) -->
+        <section id="tab-tentang" class="tab-content hidden space-y-8 animate-fade-in">
+            <!-- Profil Singkat Guru Kelas 5 -->
+            <div class="bg-white rounded-3xl border-2 border-slate-100 shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-12">
+                <!-- Foto Profile Ilustrasi -->
+                <div class="md:col-span-4 bg-gradient-to-br from-merahceri to-pink-500 p-8 flex flex-col items-center justify-center text-white text-center">
+                    <div class="w-32 h-32 bg-white rounded-full p-1.5 shadow-lg relative">
+                        <div class="w-full h-full rounded-full bg-teal-100 flex items-center justify-center text-5xl">
+                            👩‍🏫
+                        </div>
+                        <span class="absolute bottom-1 right-2 bg-yellow-400 text-slate-800 text-xs font-bold px-2 py-0.5 rounded-full shadow-md">SD</span>
+                    </div>
+                    <h3 class="text-2xl font-black mt-4">Ibu Astuti, S.Pd.</h3>
+                    <p class="text-xs text-pink-100 font-bold uppercase tracking-widest mt-1">Guru Kelas 5 Berprestasi</p>
+                    <div class="flex gap-2 mt-4">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold">⭐ 12 Th Mengajar</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold">💻 Penggiat Media</span>
+                    </div>
+                </div>
+
+                <!-- Tulisan Sambutan Guru -->
+                <div class="md:col-span-8 p-6 sm:p-10 space-y-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Menghadirkan Pembelajaran Abad 21 yang Menyenangkan!</h2>
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                        Halo Sahabat Kreatif Kelas 5! Saya <strong>Ibu Astuti</strong>, wali kelas kalian sekaligus pengembang website portal belajar digital ini. Sebagai pendidik dengan pengalaman lebih dari satu dekade, saya percaya bahwa teknologi digital bukanlah musuh, melainkan kawan terbaik untuk memperluas cakrawala berpikir anak-anak di era modern.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                        Website ini dirancang secara mandiri untuk menyajikan materi pelajaran tematik kelas 5 SD dengan konsep visual yang ceria, interaktif, serta ramah bagi anak-anak. Di sini, kita tidak hanya membaca buku, tapi juga melihat simulasi, mendengarkan dongeng, dan menguji kemampuan kita lewat kuis instan yang seru!
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-l-4 border-merahceri flex items-start gap-3">
+                        <i data-lucide="quote" class="text-merahceri w-8 h-8 flex-shrink-0 opacity-40"></i>
+                        <p class="text-xs sm:text-sm italic text-slate-600 font-medium">"Anak-anak tidak butuh dipaksa menghafal. Mereka hanya membutuhkan lingkungan belajar yang memicu rasa ingin tahu alami mereka."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filosofi Pembelajaran di Kelas 5 -->
+            <div>
+                <h3 class="text-2xl font-bold text-slate-800 text-center mb-8">💡 Pilar Utama Kelas Pembelajaran Digital Kami</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm text-center space-y-3">
+                        <div class="bg-indigo-50 text-indigo-500 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">📱</div>
+                        <h4 class="font-bold text-slate-800">Multi-Media Format</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Siswa dapat belajar melalui teks dongeng, video animasi pendek, serta file rekaman suara agar semua gaya belajar (visual, auditori, kinestetik) terakomodasi.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm text-center space-y-3">
+                        <div class="bg-emerald-50 text-emerald-500 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">🎮</div>
+                        <h4 class="font-bold text-slate-800">Gamifikasi Belajar</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Setiap penyelesaian bab dan kuis akan memberikan "Poin Bintang" instan guna memotivasi rasa kompetitif sehat anak-anak dalam meraih prestasi.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm text-center space-y-3">
+                        <div class="bg-pink-50 text-pink-500 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">👨‍👩‍👧</div>
+                        <h4 class="font-bold text-slate-800">Keterlibatan Orang Tua</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Website ini memudahkan orang tua untuk memantau langsung apa yang dipelajari anak di sekolah tanpa perlu menenteng buku teks yang berat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PENGATURAN ADMIN (DASHBOARD GURU) -->
+        <section id="tab-admin" class="tab-content hidden space-y-8 animate-fade-in">
+            <!-- Alert Info Mode Simulasi Admin -->
+            <div class="bg-violet-50 border-2 border-violet-200 p-4 rounded-2xl flex items-center gap-3 text-violet-800">
+                <i data-lucide="info" class="w-6 h-6 flex-shrink-0 animate-pulse"></i>
+                <p class="text-xs sm:text-sm font-semibold">
+                    <strong>Mode Simulasi Guru!</strong> Di sini, Anda dapat memposisikan diri sebagai admin web untuk menambahkan materi baru dengan format pilihan Anda. Materi yang Anda tambahkan akan langsung muncul di tab <strong>Mata Pelajaran</strong>!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Kolom Kiri: Form Input Tambah Materi Baru -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <i data-lucide="plus-circle" class="text-violet-600 w-6 h-6"></i> Tambah Materi Pembelajaran
+                    </h3>
+                    
+                    <form id="admin-add-form" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs sm:text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Input Pilih Mata Pelajaran -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Mata Pelajaran *</label>
+                                <select id="admin-mapel-select" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                            <!-- Input Judul Bab -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Judul Bab Baru / Pilih Bab *</label>
+                                <input type="text" id="admin-bab-title" required placeholder="Contoh: Bab 1: Menghirup Udara Bersih" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Input Judul Materi -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Judul Materi Pembelajaran *</label>
+                                <input type="text" id="admin-materi-title" required placeholder="Contoh: Mengenal Sistem Pernapasan Manusia" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                            </div>
+                            <!-- Input Format Media -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Format Tampilan Media *</label>
+                                <select id="admin-media-format" required onchange="onAdminFormatChange()" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                                    <option value="text">Teks Bacaan Bergambar</option>
+                                    <option value="video">Simulasi Video Animasi</option>
+                                    <option value="audio">Simulasi Audio / Dongeng</option>
+                                    <option value="quiz">Latihan Kuis Interaktif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Input Konten Dinamis Berdasarkan Format Media -->
+                        <div id="dynamic-editor-text" class="space-y-2">
+                            <label class="block font-bold text-slate-700">Isi Naskah / Teks Materi *</label>
+                            <textarea id="admin-content-text" rows="5" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-medium focus:border-violet-500 outline-none" placeholder="Masukkan tulisan, penomoran, atau penjelasan lengkap di sini..."></textarea>
+                        </div>
+
+                        <div id="dynamic-editor-media-details" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Kustomisasi Teks Subtitle Video / Keterangan Audio -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1" id="lbl-media-extra">Subtitle Simulasi / Catatan</label>
+                                <input type="text" id="admin-media-subtitle" placeholder="Contoh: 'Tarik napas, embuskan perlahan...'" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                            </div>
+                            <!-- Kustomisasi Emoji Visual -->
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Emoji Animasi Visual</label>
+                                <input type="text" id="admin-media-emoji" placeholder="Contoh: 🫁 atau 📐 atau 🎙️" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-2.5 font-semibold focus:border-violet-500 outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Kustomisasi Kuis jika Format terpilih adalah Kuis -->
+                        <div id="dynamic-editor-quiz" class="hidden bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
+                            <h4 class="font-bold text-amber-900 flex items-center gap-1.5"><i data-lucide="help-circle" class="w-4 h-4"></i> Susun Pertanyaan Kuis Singkat</h4>
+                            <div class="space-y-2">
+                                <label class="block font-semibold text-slate-700">Pertanyaan Kuis *</label>
+                                <input type="text" id="admin-quiz-q" placeholder="Contoh: Berapa hasil penjumlahan dari 1/2 + 1/4 ?" class="w-full bg-white border-2 border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-amber-500">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600">Pilihan A</label>
+                                    <input type="text" id="admin-quiz-a" placeholder="Opsi A" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 outline-none text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600">Pilihan B</label>
+                                    <input type="text" id="admin-quiz-b" placeholder="Opsi B" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 outline-none text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600">Pilihan C</label>
+                                    <input type="text" id="admin-quiz-c" placeholder="Opsi C" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 outline-none text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600">Jawaban Benar *</label>
+                                    <select id="admin-quiz-correct" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 outline-none text-xs font-bold text-amber-800">
+                                        <option value="A">Pilihan A</option>
+                                        <option value="B">Pilihan B</option>
+                                        <option value="C">Pilihan C</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5"></i> Simpan & Publikasikan Materi
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Kolom Kanan: Daftar Seluruh Materi Saat Ini (Bisa Dihapus) -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <i data-lucide="list-collapse" class="text-violet-600 w-6 h-6"></i> Manajemen Semua Materi
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-2">Daftar di bawah menunjukkan materi aktif. Anda dapat menghapus materi simulasi di sini.</p>
+                        
+                        <div id="admin-materi-list" class="space-y-3 mt-4 max-h-[380px] overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-2xl mt-4 text-center border border-slate-200">
+                        <span class="text-xs font-bold text-slate-500">Total Database Materi Kelas 5:</span>
+                        <p id="admin-stats-total" class="text-2xl font-black text-slate-700">0 Materi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: BANTUAN (FAQ & PANDUAN) -->
+        <section id="tab-bantuan" class="tab-content hidden space-y-6 animate-fade-in">
+            <!-- Header Bantuan -->
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Pusat Informasi</span>
+                <h2 class="text-3xl font-black text-slate-800">Ada Yang Bisa Ibu Bantu, Sayang?</h2>
+                <p class="text-sm text-slate-500 font-semibold">Mari pelajari cara terbaik menjelajahi portal kelas ini bersama Ayah dan Bunda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <!-- Kolom Kiri: Ilustrasi / Tips Cepat -->
+                <div class="md:col-span-4 bg-gradient-to-b from-daunmuda to-emerald-700 text-white rounded-3xl p-6 shadow-md space-y-4">
+                    <div class="text-4xl">💡</div>
+                    <h3 class="text-lg font-bold">Tips Belajar di Rumah:</h3>
+                    <ul class="space-y-3 text-xs sm:text-sm list-disc pl-4 font-medium text-emerald-50">
+                        <li>Sediakan tempat belajar yang tenang dan tidak bising.</li>
+                        <li>Selesaikan membaca rangkuman teks barulah tonton animasi videonya.</li>
+                        <li>Jangan takut salah saat menjawab kuis kuis asyik!</li>
+                        <li>Batasi waktu memegang gawai (screen time) maksimal 1 jam per sesi, lalu istirahatkan mata kalian ya!</li>
+                    </ul>
+                    <div class="pt-4 border-t border-white/20 text-center">
+                        <p class="text-[10px] text-emerald-200">Dukungan teknis kelas 5B SD Harapan</p>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Daftar Accordion FAQ -->
+                <div class="md:col-span-8 space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                        <button onclick="toggleFaq(1)" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition">
+                            <span>Bagaimana cara mendapatkan bintang/skor belajar?</span>
+                            <i id="faq-icon-1" data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition duration-300"></i>
+                        </button>
+                        <div id="faq-ans-1" class="hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                            Setiap kamu selesai membaca materi, mendengarkan audio, menonton video, dan menekan tombol hijau <strong class="text-biruawan">"Selesai Pelajari & Raih +10 ⭐"</strong>, skormu otomatis bertambah sebanyak 10 poin! Menjawab kuis dengan benar juga memberikan kepuasan tersendiri bagi pemahaman belajarmu.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                        <button onclick="toggleFaq(2)" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition">
+                            <span>Format media apa saja yang ada di website ini?</span>
+                            <i id="faq-icon-2" data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition duration-300"></i>
+                        </button>
+                        <div id="faq-ans-2" class="hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                            Website ini mendukung 4 format keren:
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                               <li><strong>Teks Bergambar</strong>: Rangkuman materi singkat yang tidak membosankan.</li>
+                               <li><strong>Video Animasi Simulasi</strong>: Menyajikan konsep rumit lewat animasi emoji dan teks interaktif yang seru.</li>
+                               <li><strong>Audio Penjelasan</strong>: Suara guru membacakan materi/cerita.</li>
+                               <li><strong>Kuis Interaktif</strong>: Latihan pilihan ganda untuk menantang otak cerdasmu!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                        <button onclick="toggleFaq(3)" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition">
+                            <span>Apakah Ibu Guru bisa mengganti atau menambahkan pelajaran baru?</span>
+                            <i id="faq-icon-3" data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition duration-300"></i>
+                        </button>
+                        <div id="faq-ans-3" class="hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                            Sangat bisa! Ibu guru dapat beralih ke menu <strong class="text-violet-600">Panel Guru (Admin)</strong>. Melalui panel tersebut, guru dapat menambahkan bab baru, judul materi, tipe media, naskah kuis, dan data tersebut akan langsung masuk ke database simulasi website ini.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                        <button onclick="toggleFaq(4)" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition">
+                            <span>Bagaimana cara orang tua menggunakan web ini untuk membimbing anak?</span>
+                            <i id="faq-icon-4" data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition duration-300"></i>
+                        </button>
+                        <div id="faq-ans-4" class="hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                            Ayah dan Bunda cukup menemani ananda membuka materi di samping kiri. Cobalah untuk menanyakan kembali isi video atau bacaan setelah selesai diputar. Hal ini sangat baik untuk menumbuhkan interaksi belajar bersama (collaborative learning) di rumah.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-12 border-t-4 border-cerianing">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-bold text-white text-lg font-kids tracking-wide">Kelas Kreatif <span class="text-biruawan">SD Harapan Bangsa</span></p>
+                <p class="text-xs mt-1">Dibuat khusus untuk Pembelajaran Tematik Kelas 5 SD.</p>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-bold text-slate-500">
+                <span class="hover:text-white transition duration-200 cursor-pointer" onclick="switchTab('dashboard')">Beranda</span>
+                <span>•</span>
+                <span class="hover:text-white transition duration-200 cursor-pointer" onclick="switchTab('mapel')">Mata Pelajaran</span>
+                <span>•</span>
+                <span class="hover:text-white transition duration-200 cursor-pointer" onclick="switchTab('tentang')">Profil Guru</span>
+            </div>
+            <div class="text-center md:text-right text-xs">
+                <p>&copy; 2026 Portal Belajar Ibu Astuti. Hak Cipta Dilindungi.</p>
+                <p class="text-[10px] text-slate-600 mt-1">Sistem Pembelajaran Mandiri Generasi Emas 🇮🇩</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIKA JAVASCRIPT PROGRAM (DATABASE, EVENT, ANIMASI) -->
+    <script>
+        // DATA MASTER PELAJARAN (IPA, Matematika, Bahasa Indonesia, IPS)
+        let subjects = [
+            { id: 'ipa', name: 'Ilmu Pengetahuan Alam (IPA)', icon: 'flask', colorClass: 'biruawan', bgLight: 'bg-teal-50', textCol: 'text-biruawan' },
+            { id: 'matematika', name: 'Matematika Kreatif', icon: 'binary', colorClass: 'cerianing', bgLight: 'bg-orange-50', textCol: 'text-cerianing' },
+            { id: 'indo', name: 'Bahasa Indonesia', icon: 'languages', colorClass: 'merahceri', bgLight: 'bg-pink-50', textCol: 'text-merahceri' },
+            { id: 'ips', name: 'Ilmu Pengetahuan Sosial (IPS)', icon: 'globe-2', colorClass: 'daunmuda', bgLight: 'bg-emerald-50', textCol: 'text-daunmuda' }
+        ];
+
+        // DATABASE MATERI AWAL (PRE-POPULATED)
+        let lessons = [
+            // IPA MATERI
+            {
+                id: 'materi-1',
+                subjectId: 'ipa',
+                chapter: 'Bab 1: Alat Pernapasan Makhluk Hidup',
+                title: 'Cara Kerja Paru-Paru Kita',
+                format: 'video',
+                time: '4 Menit Belajar',
+                isCompleted: false,
+                subtitle: '"Tarik napas sedalam-dalamnya... Rasakan dada membesar!" 🫁',
+                emoji: '🫁',
+                content: 'Paru-paru adalah organ utama sistem pernapasan manusia. Saat kita menarik napas (inspirasi), udara bersih masuk melalui rongga hidung, tenggorokan, dan paru-paru mengembang. Oksigen diserap oleh darah merah. Saat kita mengembuskan napas (ekspirasi), paru-paru mengempis dan mengeluarkan gas sisa bernama Karbondioksida!'
+            },
+            {
+                id: 'materi-2',
+                subjectId: 'ipa',
+                chapter: 'Bab 1: Alat Pernapasan Makhluk Hidup',
+                title: 'Latihan Memahami Gangguan Pernapasan',
+                format: 'quiz',
+                time: '6 Menit Kuis',
+                isCompleted: false,
+                quiz: {
+                    question: 'Apa jenis gas yang kita buang dari paru-paru saat mengembuskan napas?',
+                    a: 'Oksigen (O2)',
+                    b: 'Karbondioksida (CO2)',
+                    c: 'Nitrogen (N)',
+                    correct: 'B'
+                }
+            },
+            {
+                id: 'materi-3',
+                subjectId: 'ipa',
+                chapter: 'Bab 2: Sistem Pencernaan Sehat',
+                title: 'Mengapa Makanan Harus Dikunyah Halus?',
+                format: 'text',
+                time: '3 Menit Membaca',
+                isCompleted: false,
+                content: `Halo Sahabat Kreatif! Pernahkah kamu diperingatkan oleh orang tuamu agar mengunyah makanan dengan perlahan dan halus? Ternyata, hal itu ada alasan ilmiahnya lho!<br><br>
+                Di dalam mulut kita terdapat organ bernama gigi, lidah, dan air liur. Gigi berfungsi memotong dan menghaluskan makanan secara mekanis. Sementara air liur menghasilkan enzim Amilase (Ptialin) yang membantu mencerna zat karbohidrat (nasi, roti) secara kimiawi agar mudah ditelan.<br><br>
+                Jika kamu menelan makanan yang masih kasar, lambungmu harus bekerja ekstra keras dan bisa menyebabkan perutmu kembung atau sakit!`
+            },
+            // MATEMATIKA MATERI
+            {
+                id: 'materi-4',
+                subjectId: 'matematika',
+                chapter: 'Bab 1: Penjumlahan Pecahan Berbeda Penyebut',
+                title: 'Rahasia Menyamakan Penyebut',
+                format: 'text',
+                time: '5 Menit Membaca',
+                isCompleted: false,
+                content: `Mari kita bahas cara paling asyik menjumlahkan pecahan! Bayangkan kamu mempunyai <strong>1/2 kue cokelat</strong>, lalu ibumu memberikanmu lagi <strong>1/4 bagian kue</strong>. Berapa jumlah kuemu sekarang?<br><br>
+                Kita tidak boleh langsung menjumlahkan pembilangnya karena penyebutnya berbeda (angka 2 dan 4).<br><br>
+                <strong>Langkah Mudah:</strong><br>
+                1. Cari KPK dari angka penyebut (2 dan 4). KPK-nya adalah 4.<br>
+                2. Ubah pecahan 1/2 menjadi berpenyebut 4. Caranya, kalikan atas dan bawah dengan 2, sehingga menjadi 2/4.<br>
+                3. Sekarang pecahan menjadi: 2/4 + 1/4.<br>
+                4. Jumlahkan pembilangnya! Hasilnya adalah <strong>3/4</strong>!`
+            },
+            {
+                id: 'materi-5',
+                subjectId: 'matematika',
+                chapter: 'Bab 1: Penjumlahan Pecahan Berbeda Penyebut',
+                title: 'Asah Kemampuan Penjumlahan Pecahan',
+                format: 'quiz',
+                time: '4 Menit Kuis',
+                isCompleted: false,
+                quiz: {
+                    question: 'Berapakah hasil penjumlahan dari 1/3 + 1/6 ?',
+                    a: '2/6 (disederhanakan menjadi 1/3)',
+                    b: '3/6 (disederhanakan menjadi 1/2)',
+                    c: '2/9',
+                    correct: 'B'
+                }
+            },
+            // BAHASA INDONESIA
+            {
+                id: 'materi-6',
+                subjectId: 'indo',
+                chapter: 'Bab 1: Mengenal Dongeng & Unsur Cerita',
+                title: 'Mendengar Dongeng Semut & Belalang',
+                format: 'audio',
+                time: '5 Menit Dongeng',
+                isCompleted: false,
+                subtitle: '"Dengarkan baik-baik kisah perjuangan Semut yang rajin mengumpulkan persediaan makanan."',
+                emoji: '🐜🦗',
+                content: 'Kisah Semut dan Belalang mengajarkan anak kelas 5 tentang nilai kerja keras. Pada musim panas, semut rajin mengumpulkan makanan untuk musim dingin yang panjang. Sementara belalang terus bersenang-senang mengabaikan waktu. Saat salju turun, belalang kelaparan dan memohon bantuan semut. Semut yang baik hati pun membagikan makanannya namun memberi nasihat agar kelak tidak bermalas-malasan.'
+            },
+            // IPS
+            {
+                id: 'materi-7',
+                subjectId: 'ips',
+                chapter: 'Bab 1: Keragaman Budaya Indonesia',
+                title: 'Menyusuri Rumah Adat Pulau Sumatra',
+                format: 'text',
+                time: '5 Menit Jelajah',
+                isCompleted: false,
+                content: `Indonesia terkenal dengan semboyan Bhinneka Tunggal Ika yang tercermin dari rumah-rumah tradisionalnya yang megah dan penuh filosofi. Salah satunya di Sumatra:<br><br>
+                <strong>1. Rumah Gadang (Sumatra Barat)</strong><br>
+                Rumah adat Minangkabau ini memiliki ciri khas atap yang runcing menyerupai tanduk kerbau (disebut Gonjong). Rumah ini berbentuk panggung untuk melindungi diri dari binatang buas dan banjir.<br><br>
+                <strong>2. Rumah Bolon (Sumatra Utara)</strong><br>
+                Rumah tradisional suku Batak yang berbentuk persegi besar dengan atap melengkung seperti punggung kerbau. Biasanya dihuni oleh beberapa keluarga bersama secara bergotong royong.`
+            }
+        ];
+
+        // STATE MANAGEMENT WEB
+        let activeTab = 'dashboard';
+        let selectedSubjectId = 'ipa';
+        let currentActiveLessonId = null;
+        let scoreCount = 0;
+
+        // STATE AUDIO & VIDEO SIMULASI
+        let isAudioPlaying = false;
+        let audioTimer = null;
+        let audioProgress = 0;
+        let isVideoPlaying = false;
+        let videoTimer = null;
+        let videoProgress = 0;
+
+        // FUNGSI INISIALISASI SAAT HALAMAN DIBUKA
+        window.onload = function() {
+            // Setup Lucide icons
+            lucide.createIcons();
+            
+            // Tampilkan Skor Tersimpan (jika ada)
+            loadScore();
+            
+            // Muat Data Pelajaran & Materi Pertama Kali
+            renderSubjectCards();
+            renderSubjectSelectors();
+            renderChaptersAndLessons();
+            renderAdminMapelSelect();
+            renderAdminMateriList();
+            updateDashboardStats();
+        }
+
+        // FUNGSI GANTI MENU UTAMA / TAB
+        function switchTab(tabId) {
+            // Sembunyikan semua tab
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            
+            // Hapus kelas aktif dari tombol desktop
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('bg-slate-100', 'border-b-4', 'border-biruawan', 'font-extrabold');
+            });
+
+            // Tampilkan tab yang dipilih
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            
+            // Tandai tombol navigasi aktif
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-slate-100', 'font-extrabold');
+                if (tabId === 'dashboard') activeBtn.classList.add('border-b-4', 'border-biruawan');
+                if (tabId === 'mapel') activeBtn.classList.add('border-b-4', 'border-cerianing');
+                if (tabId === 'tentang') activeBtn.classList.add('border-b-4', 'border-merahceri');
+                if (tabId === 'admin') activeBtn.classList.add('border-b-4', 'border-ungulucu');
+                if (tabId === 'bantuan') activeBtn.classList.add('border-b-4', 'border-daunmuda');
+            }
+
+            activeTab = tabId;
+            
+            // Khusus tab Mapel, panggil render jika berganti
+            if (tabId === 'mapel') {
+                renderChaptersAndLessons();
+            }
+
+            // Scroll ke atas halaman agar nyaman
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // FUNGSI MENAMPILKAN KARTU MATA PELAJARAN DI BERANDA (DASHBOARD)
+        function renderSubjectCards() {
+            const container = document.getElementById('subject-cards-container');
+            container.innerHTML = '';
+
+            subjects.forEach(subj => {
+                // Hitung jumlah materi per mapel
+                const totalMateri = lessons.filter(l => l.subjectId === subj.id).length;
+
+                // Tentukan border hover color
+                let hoverColor = 'hover:border-biruawan';
+                if (subj.id === 'matematika') hoverColor = 'hover:border-cerianing';
+                if (subj.id === 'indo') hoverColor = 'hover:border-merahceri';
+                if (subj.id === 'ips') hoverColor = 'hover:border-daunmuda';
+
+                const cardHtml = `
+                    <div onclick="selectSubjectFromDashboard('${subj.id}')" class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm cursor-pointer transform hover:-translate-y-2 hover:shadow-lg transition duration-300 flex flex-col justify-between ${hoverColor}">
+                        <div class="space-y-4">
+                            <div class="${subj.bgLight} ${subj.textCol} w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i data-lucide="${subj.icon}" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-800 text-lg leading-snug">${subj.name}</h3>
+                                <p class="text-xs text-slate-400 font-bold mt-1">Kurikulum Merdeka SD Kelas 5</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">${totalMateri} Materi</span>
+                            <span class="${subj.textCol} font-bold text-xs flex items-center gap-1">Belajar <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+            lucide.createIcons();
+        }
+
+        // FUNGSI JIKA PILIH PELAJARAN DARI KARTU BERANDA
+        function selectSubjectFromDashboard(subjId) {
+            selectedSubjectId = subjId;
+            renderSubjectSelectors();
+            switchTab('mapel');
+        }
+
+        // FUNGSI TAMPILKAN PILIHAN PELAJARAN DI TAB BELAJAR (MAPEL)
+        function renderSubjectSelectors() {
+            const container = document.getElementById('subject-selectors');
+            container.innerHTML = '';
+
+            subjects.forEach(subj => {
+                const isActive = subj.id === selectedSubjectId;
+                
+                let activeStyle = '';
+                if (isActive) {
+                    if (subj.id === 'ipa') activeStyle = 'bg-biruawan text-white shadow-md scale-105';
+                    if (subj.id === 'matematika') activeStyle = 'bg-cerianing text-white shadow-md scale-105';
+                    if (subj.id === 'indo') activeStyle = 'bg-merahceri text-white shadow-md scale-105';
+                    if (subj.id === 'ips') activeStyle = 'bg-daunmuda text-white shadow-md scale-105';
+                } else {
+                    activeStyle = 'bg-slate-50 text-slate-700 hover:bg-slate-100';
+                }
+
+                const btnHtml = `
+                    <button onclick="changeSubject('${subj.id}')" class="px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 ${activeStyle}">
+                        <i data-lucide="${subj.icon}" class="w-4 h-4"></i> ${subj.id.toUpperCase()}
+                    </button>
+                `;
+                container.innerHTML += btnHtml;
+            });
+            lucide.createIcons();
+        }
+
+        // EVENT GANTI MATA PELAJARAN DI TAB BELAJAR
+        function changeSubject(subjId) {
+            selectedSubjectId = subjId;
+            renderSubjectSelectors();
+            renderChaptersAndLessons();
+            
+            // Reset detail view ke placeholder
+            document.getElementById('material-placeholder').classList.remove('hidden');
+            document.getElementById('material-details').classList.add('hidden');
+            currentActiveLessonId = null;
+        }
+
+        // FUNGSI MENAMPILKAN DAFTAR BAB DAN LESSON DI TAB BELAJAR (KIRI)
+        function renderChaptersAndLessons() {
+            const container = document.getElementById('chapters-list');
+            container.innerHTML = '';
+
+            // Filter materi berdasarkan mata pelajaran yang aktif
+            const filteredLessons = lessons.filter(l => l.subjectId === selectedSubjectId);
+
+            if (filteredLessons.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-6">Materi untuk pelajaran ini belum diunggah.</p>`;
+                return;
+            }
+
+            // Kelompokkan pelajaran berdasarkan Bab
+            let chaptersGroup = {};
+            filteredLessons.forEach(l => {
+                if (!chaptersGroup[l.chapter]) {
+                    chaptersGroup[l.chapter] = [];
+                }
+                chaptersGroup[l.chapter].push(l);
+            });
+
+            // Tampilkan masing-masing Bab
+            Object.keys(chaptersGroup).forEach((chapterTitle, index) => {
+                let lessonsListHtml = '';
+                
+                chaptersGroup[chapterTitle].forEach(lesson => {
+                    const isCurrent = lesson.id === currentActiveLessonId;
+                    
+                    // Icon berdasarkan format media
+                    let mediaIcon = 'file-text';
+                    let mediaColor = 'text-blue-500';
+                    if (lesson.format === 'video') { mediaIcon = 'play-circle'; mediaColor = 'text-red-500'; }
+                    if (lesson.format === 'audio') { mediaIcon = 'headphones'; mediaColor = 'text-indigo-500'; }
+                    if (lesson.format === 'quiz') { mediaIcon = 'help-circle'; mediaColor = 'text-amber-500'; }
+
+                    const activeLessonStyle = isCurrent 
+                        ? 'border-l-4 border-biruawan bg-teal-50/50 font-bold' 
+                        : 'hover:bg-slate-50';
+
+                    lessonsListHtml += `
+                        <div onclick="selectLesson('${lesson.id}')" class="p-3 rounded-xl cursor-pointer transition flex items-start gap-2.5 ${activeLessonStyle}">
+                            <div class="${mediaColor} mt-0.5 flex-shrink-0">
+                                <i data-lucide="${mediaIcon}" class="w-5 h-5"></i>
+                            </div>
+                            <div class="flex-grow min-w-0">
+                                <h5 class="text-xs sm:text-sm text-slate-800 font-semibold truncate">${lesson.title}</h5>
+                                <div class="flex items-center gap-1.5 mt-1">
+                                    <span class="text-[10px] text-slate-400 uppercase tracking-wide font-bold">${lesson.format}</span>
+                                    ${lesson.isCompleted ? '<span class="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-bold">Lulus ⭐</span>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const chapterCard = `
+                    <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-100 space-y-2">
+                        <h4 class="font-extrabold text-xs text-slate-700 tracking-wide border-b border-slate-200/60 pb-1.5 uppercase">${chapterTitle}</h4>
+                        <div class="space-y-1">
+                            ${lessonsListHtml}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += chapterCard;
+            });
+            lucide.createIcons();
+        }
+
+        // EVENT MEMILIH LESSON TERPILIH UNTUK TAMPIL DI KANAN
+        function selectLesson(lessonId) {
+            currentActiveLessonId = lessonId;
+            
+            // Redraw sidebar untuk update penanda active
+            renderChaptersAndLessons();
+            
+            // Ambil data materi
+            const lesson = lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+
+            // Sembunyikan placeholder, tampilkan detail
+            document.getElementById('material-placeholder').classList.add('hidden');
+            const detailsSection = document.getElementById('material-details');
+            detailsSection.classList.remove('hidden');
+
+            // Set Meta Data
+            document.getElementById('lesson-title').innerText = lesson.title;
+            document.getElementById('lesson-chapter-name').innerText = lesson.chapter;
+            document.getElementById('lesson-time').innerText = lesson.time;
+
+            const mapelObj = subjects.find(s => s.id === lesson.subjectId);
+            document.getElementById('lesson-subject-name').innerText = mapelObj ? mapelObj.name : 'Mata Pelajaran';
+
+            // Reset media player views & timers
+            stopMockAudio();
+            stopMockVideo();
+
+            // Sembunyikan semua media format section terlebih dahulu
+            document.getElementById('media-text-section').classList.add('hidden');
+            document.getElementById('media-video-section').classList.add('hidden');
+            document.getElementById('media-audio-section').classList.add('hidden');
+            document.getElementById('media-quiz-section').classList.add('hidden');
+
+            // Atur Badge Format
+            const badge = document.getElementById('lesson-badge');
+            badge.innerText = lesson.format.toUpperCase();
+
+            // Tampilkan Media Spesifik
+            if (lesson.format === 'text') {
+                const textSection = document.getElementById('media-text-section');
+                textSection.classList.remove('hidden');
+                textSection.innerHTML = `
+                    <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100 mb-4 flex items-center gap-3">
+                        <span class="text-3xl">📖</span>
+                        <p class="text-xs text-blue-800 font-semibold">Bacalah rangkuman asyik ini dengan saksama. Kamu dapat mencatat bagian penting di buku tulismu ya!</p>
+                    </div>
+                    ${lesson.content}
+                `;
+                badge.className = "bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase";
+            } 
+            else if (lesson.format === 'video') {
+                document.getElementById('media-video-section').classList.remove('hidden');
+                document.getElementById('video-subtitle').innerText = lesson.subtitle || '"Udara mengalir bebas!"';
+                document.getElementById('video-emoji-anim').innerText = lesson.emoji || '🎦';
+                badge.className = "bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase";
+            } 
+            else if (lesson.format === 'audio') {
+                document.getElementById('media-audio-section').classList.remove('hidden');
+                badge.className = "bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase";
+                // Naskah pembantu di bawah audio
+                const audText = document.getElementById('media-text-section');
+                audText.classList.remove('hidden');
+                audText.innerHTML = `
+                    <div class="bg-indigo-50/40 p-3 rounded-xl border border-indigo-100/60 text-xs italic text-slate-500 mt-2">
+                        <strong>Naskah Audio:</strong> "${lesson.content}"
+                    </div>
+                `;
+            } 
+            else if (lesson.format === 'quiz') {
+                const quizSection = document.getElementById('media-quiz-section');
+                quizSection.classList.remove('hidden');
+                badge.className = "bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase";
+                
+                // Siapkan quiz
+                const qData = lesson.quiz;
+                const quizContainer = document.getElementById('quiz-question-container');
+                quizContainer.innerHTML = `
+                    <p class="font-bold text-slate-800 text-sm sm:text-base">${qData.question}</p>
+                    <div class="grid grid-cols-1 gap-3 text-xs sm:text-sm">
+                        <button onclick="checkQuizAnswer('A')" id="quiz-opt-A" class="quiz-option bg-white hover:bg-slate-100 text-slate-700 font-semibold p-4 rounded-xl border-2 border-slate-200 text-left transition flex justify-between items-center">
+                            <span><strong>A.</strong> ${qData.a}</span>
+                        </button>
+                        <button onclick="checkQuizAnswer('B')" id="quiz-opt-B" class="quiz-option bg-white hover:bg-slate-100 text-slate-700 font-semibold p-4 rounded-xl border-2 border-slate-200 text-left transition flex justify-between items-center">
+                            <span><strong>B.</strong> ${qData.b}</span>
+                        </button>
+                        <button onclick="checkQuizAnswer('C')" id="quiz-opt-C" class="quiz-option bg-white hover:bg-slate-100 text-slate-700 font-semibold p-4 rounded-xl border-2 border-slate-200 text-left transition flex justify-between items-center">
+                            <span><strong>C.</strong> ${qData.c}</span>
+                        </button>
+                    </div>
+                    <div id="quiz-feedback" class="hidden text-center p-3 rounded-xl font-bold text-xs sm:text-sm"></div>
+                `;
+            }
+
+            // Atur Tombol "Selesai Membaca / Dapatkan Poin"
+            updateLessonStatusUI(lesson);
+        }
+
+        // FUNGSI UPDATE TAMPILAN STATUS LESSON (SELESAI / BELUM)
+        function updateLessonStatusUI(lesson) {
+            const markBtn = document.getElementById('mark-complete-btn');
+            const statusBadge = document.getElementById('lesson-status-badge');
+
+            if (lesson.isCompleted) {
+                markBtn.classList.add('hidden');
+                statusBadge.classList.remove('hidden');
+            } else {
+                markBtn.classList.remove('hidden');
+                statusBadge.classList.add('hidden');
+            }
+        }
+
+        // EVENT MENYELESAIKAN MATERI & MENDAPATKAN POIN (GAMIFIKASI)
+        function completeCurrentLesson() {
+            if (!currentActiveLessonId) return;
+
+            const lesson = lessons.find(l => l.id === currentActiveLessonId);
+            if (!lesson) return;
+
+            // Jika kuis belum dijawab/benar, minta dikerjakan dulu
+            if (lesson.format === 'quiz' && !lesson.isCompleted) {
+                showToast("Oops! Kerjakan kuis dulu & pilih jawaban benar untuk dapat poin! 🌟", "error");
+                return;
+            }
+
+            // Tandai selesai
+            lesson.isCompleted = true;
+            scoreCount += 10;
+            saveScore();
+
+            // Efek Suara/Animasi Instan
+            showToast("Hebat! Belajar Selesai. Kamu dapat +10 Bintang ⭐", "success");
+            
+            // Update Tampilan UI
+            updateLessonStatusUI(lesson);
+            renderChaptersAndLessons();
+            updateDashboardStats();
+        }
+
+        // FUNGSI CEK JAWABAN KUIS INTERAKTIF
+        function checkQuizAnswer(selectedOption) {
+            if (!currentActiveLessonId) return;
+
+            const lesson = lessons.find(l => l.id === currentActiveLessonId);
+            if (!lesson || lesson.format !== 'quiz') return;
+
+            const qData = lesson.quiz;
+            const feedbackDiv = document.getElementById('quiz-feedback');
+            
+            // Reset option styling
+            const options = ['A', 'B', 'C'];
+            options.forEach(opt => {
+                const btn = document.getElementById(`quiz-opt-${opt}`);
+                if (btn) {
+                    btn.className = "quiz-option bg-white text-slate-700 font-semibold p-4 rounded-xl border-2 border-slate-200 text-left transition flex justify-between items-center";
+                }
+            });
+
+            const selectedBtn = document.getElementById(`quiz-opt-${selectedOption}`);
+
+            if (selectedOption === qData.correct) {
+                // Jawaban Benar
+                if (selectedBtn) {
+                    selectedBtn.className = "quiz-option bg-emerald-100 text-emerald-800 font-bold p-4 rounded-xl border-2 border-emerald-400 text-left transition flex justify-between items-center";
+                    selectedBtn.innerHTML += `<i data-lucide="check" class="text-emerald-600"></i>`;
+                }
+                
+                feedbackDiv.className = "bg-emerald-100 border border-emerald-300 text-emerald-800 text-center p-3 rounded-xl font-bold text-xs sm:text-sm";
+                feedbackDiv.innerText = "🎉 Jawabanmu BENAR! Kamu cerdas sekali! Sekarang ketuk tombol Selesai di bawah.";
+                feedbackDiv.classList.remove('hidden');
+
+                // Tandai kelulusan kuis agar tombol selesai bisa diklik
+                lesson.isCompleted = true;
+                scoreCount += 10; // Extra bonus point
+                saveScore();
+                showToast("Keren! Jawabanmu Tepat! +10 Bintang ⭐", "success");
+
+                // Update UI status
+                updateLessonStatusUI(lesson);
+                renderChaptersAndLessons();
+                updateDashboardStats();
+            } else {
+                // Jawaban Salah
+                if (selectedBtn) {
+                    selectedBtn.className = "quiz-option bg-red-100 text-red-800 font-semibold p-4 rounded-xl border-2 border-red-400 text-left transition flex justify-between items-center";
+                    selectedBtn.innerHTML += `<i data-lucide="x" class="text-red-600"></i>`;
+                }
+
+                feedbackDiv.className = "bg-red-50 border border-red-200 text-red-700 text-center p-3 rounded-xl font-bold text-xs sm:text-sm";
+                feedbackDiv.innerText = "❌ Kurang tepat, ayo coba lagi! Pelajari kembali rangkuman di atas ya.";
+                feedbackDiv.classList.remove('hidden');
+                showToast("Ayo coba opsi lain! Kamu pasti bisa! 💪", "error");
+            }
+            lucide.createIcons();
+        }
+
+        // SIMULASI PEMUTAR AUDIO (PODCAST GURU)
+        function toggleAudioMock() {
+            const playBtn = document.getElementById('audio-play-btn');
+            
+            if (isAudioPlaying) {
+                stopMockAudio();
+            } else {
+                // Mulai mainkan
+                isAudioPlaying = true;
+                playBtn.innerHTML = `<i data-lucide="pause" class="w-5 h-5 fill-current"></i>`;
+                lucide.createIcons();
+                
+                audioTimer = setInterval(() => {
+                    audioProgress += 5;
+                    if (audioProgress > 100) {
+                        stopMockAudio();
+                        showToast("Audio narasi selesai didengarkan! 🎧", "success");
+                    } else {
+                        document.getElementById('audio-progress-bar').style.width = audioProgress + '%';
+                        // Update timer text
+                        const sec = Math.floor((audioProgress / 100) * 150);
+                        const mins = Math.floor(sec / 60);
+                        const remSec = sec % 60;
+                        document.getElementById('audio-time').innerText = `0${mins}:${remSec < 10 ? '0' : ''}${remSec} / 02:30`;
+                    }
+                }, 300);
+            }
+        }
+
+        function stopMockAudio() {
+            isAudioPlaying = false;
+            if (audioTimer) clearInterval(audioTimer);
+            
+            const playBtn = document.getElementById('audio-play-btn');
+            if (playBtn) {
+                playBtn.innerHTML = `<i data-lucide="play" class="w-5 h-5 fill-current"></i>`;
+                lucide.createIcons();
+            }
+            audioProgress = 0;
+            const pBar = document.getElementById('audio-progress-bar');
+            if (pBar) pBar.style.width = '0%';
+            const tText = document.getElementById('audio-time');
+            if (tText) tText.innerText = '00:00 / 02:30';
+        }
+
+        // SIMULASI PEMUTAR VIDEO (ANIMASI DI KELAS)
+        function playMockVideo() {
+            document.getElementById('video-thumbnail').classList.add('hidden');
+            document.getElementById('video-playing').classList.remove('hidden');
+            
+            isVideoPlaying = true;
+            videoProgress = 0;
+            
+            videoTimer = setInterval(() => {
+                videoProgress += 4;
+                if (videoProgress > 100) {
+                    stopMockVideo();
+                    showToast("Video Pembelajaran Animasi Selesai Diputar! 🎬", "success");
+                } else {
+                    document.getElementById('video-progress-bar').style.width = videoProgress + '%';
+                }
+            }, 400);
+        }
+
+        function stopMockVideo() {
+            isVideoPlaying = false;
+            if (videoTimer) clearInterval(videoTimer);
+            
+            document.getElementById('video-thumbnail').classList.remove('hidden');
+            document.getElementById('video-playing').classList.add('hidden');
+            document.getElementById('video-progress-bar').style.width = '0%';
+            videoProgress = 0;
+        }
+
+        // SISTEM TOAST / POPUP NOTIFIKASI KUSTOM
+        function showToast(message, type = "success") {
+            const toast = document.getElementById('custom-toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+
+            if (type === "success") {
+                toastIcon.className = "bg-emerald-500 p-1.5 rounded-lg text-white";
+                toastIcon.innerHTML = `<i data-lucide="sparkles" class="w-5 h-5"></i>`;
+            } else {
+                toastIcon.className = "bg-red-500 p-1.5 rounded-lg text-white";
+                toastIcon.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5"></i>`;
+            }
+
+            lucide.createIcons();
+
+            // Efek meluncur muncul
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            // Tutup setelah 4 detik
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        // AKUMULASI SCORE (GAMIFIKASI LOCAL STORAGE SIMULASI)
+        function saveScore() {
+            document.getElementById('student-score').innerText = `${scoreCount} Poin`;
+            localStorage.setItem('k5_student_score', scoreCount);
+        }
+
+        function loadScore() {
+            const saved = localStorage.getItem('k5_student_score');
+            if (saved) {
+                scoreCount = parseInt(saved);
+            } else {
+                scoreCount = 0;
+            }
+            document.getElementById('student-score').innerText = `${scoreCount} Poin`;
+        }
+
+        // ACCORDION FAQ BANTUAN
+        function toggleFaq(id) {
+            const ans = document.getElementById(`faq-ans-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                ans.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // UPDATE STATISTIK DI DASHBOARD GURU & ANAK
+        function updateDashboardStats() {
+            const completedCount = lessons.filter(l => l.isCompleted).length;
+            document.getElementById('stats-completed').innerText = `${completedCount} Materi`;
+
+            // Hitung lencana anak berdasarkan skor
+            let badgeName = "Pemula Berbakat 🌱";
+            if (scoreCount >= 30) badgeName = "Petualang Cerdas 🎒";
+            if (scoreCount >= 65) badgeName = "Bintang Kelas 🌟";
+            if (scoreCount >= 100) badgeName = "Profesor Cilik 🎓";
+            
+            document.getElementById('stats-badge').innerText = badgeName;
+            document.getElementById('admin-stats-total').innerText = `${lessons.length} Materi`;
+        }
+
+
+        // ==========================================
+        // LOGIKA PANEL ADMIN / DASHBOARD INPUT GURU
+        // ==========================================
+
+        // Menampilkan dropdown mata pelajaran pada panel Admin
+        function renderAdminMapelSelect() {
+            const selectEl = document.getElementById('admin-mapel-select');
+            selectEl.innerHTML = '';
+            subjects.forEach(subj => {
+                selectEl.innerHTML += `<option value="${subj.id}">${subj.name}</option>`;
+            });
+        }
+
+        // Memantau pergantian format materi di form Admin
+        function onAdminFormatChange() {
+            const format = document.getElementById('admin-media-format').value;
+            
+            const textEditor = document.getElementById('dynamic-editor-text');
+            const mediaDetails = document.getElementById('dynamic-editor-media-details');
+            const quizEditor = document.getElementById('dynamic-editor-quiz');
+
+            // Default hidden
+            textEditor.classList.add('hidden');
+            mediaDetails.classList.add('hidden');
+            quizEditor.classList.add('hidden');
+
+            const lblExtra = document.getElementById('lbl-media-extra');
+
+            if (format === 'text') {
+                textEditor.classList.remove('hidden');
+            } 
+            else if (format === 'video') {
+                mediaDetails.classList.remove('hidden');
+                lblExtra.innerText = "Teks Subtitle Video Animasi *";
+            } 
+            else if (format === 'audio') {
+                textEditor.classList.remove('hidden');
+                mediaDetails.classList.remove('hidden');
+                lblExtra.innerText = "Catatan Pengantar Suara Guru *";
+            } 
+            else if (format === 'quiz') {
+                quizEditor.classList.remove('hidden');
+            }
+        }
+
+        // Submit form Admin untuk menambah materi baru
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const subjectId = document.getElementById('admin-mapel-select').value;
+            const chapter = document.getElementById('admin-bab-title').value;
+            const title = document.getElementById('admin-materi-title').value;
+            const format = document.getElementById('admin-media-format').value;
+            
+            // Generate unique ID
+            const newId = `materi-user-${Date.now()}`;
+
+            let newLesson = {
+                id: newId,
+                subjectId: subjectId,
+                chapter: chapter,
+                title: title,
+                format: format,
+                time: '5 Menit Belajar',
+                isCompleted: false
+            };
+
+            // Validasi data spesifik format
+            if (format === 'text') {
+                const content = document.getElementById('admin-content-text').value;
+                if (!content) { showToast("Mohon isi naskah teks materi!", "error"); return; }
+                newLesson.content = content;
+            } 
+            else if (format === 'video') {
+                const subtitle = document.getElementById('admin-media-subtitle').value || '"Belajar asyik menyenangkan!"';
+                const emoji = document.getElementById('admin-media-emoji').value || '🎬';
+                newLesson.subtitle = subtitle;
+                newLesson.emoji = emoji;
+            } 
+            else if (format === 'audio') {
+                const content = document.getElementById('admin-content-text').value;
+                const subtitle = document.getElementById('admin-media-subtitle').value || '"Putar suaranya ya!"';
+                const emoji = document.getElementById('admin-media-emoji').value || '🎙️';
+                if (!content) { showToast("Mohon isi naskah pembantu audio!", "error"); return; }
+                newLesson.content = content;
+                newLesson.subtitle = subtitle;
+                newLesson.emoji = emoji;
+            } 
+            else if (format === 'quiz') {
+                const question = document.getElementById('admin-quiz-q').value;
+                const optA = document.getElementById('admin-quiz-a').value;
+                const optB = document.getElementById('admin-quiz-b').value;
+                const optC = document.getElementById('admin-quiz-c').value;
+                const correct = document.getElementById('admin-quiz-correct').value;
+
+                if (!question || !optA || !optB || !optC) {
+                    showToast("Harap lengkapi semua isian kuis!", "error");
+                    return;
+                }
+
+                newLesson.quiz = {
+                    question: question,
+                    a: optA,
+                    b: optB,
+                    c: optC,
+                    correct: correct
+                };
+            }
+
+            // Tambahkan ke database lokal (memory array)
+            lessons.push(newLesson);
+
+            // Reset Form & Notifikasi Sukses
+            document.getElementById('admin-add-form').reset();
+            onAdminFormatChange(); // reset layout dinamis
+            
+            showToast("Sukses! Materi baru ditambahkan ke Portal Belajar.", "success");
+            
+            // Perbarui seluruh interface
+            renderSubjectCards();
+            renderChaptersAndLessons();
+            renderAdminMateriList();
+            updateDashboardStats();
+        }
+
+        // MENAMPILKAN DAFTAR MATERI DI PANEL KANAN ADMIN (MANAJEMEN GURU)
+        function renderAdminMateriList() {
+            const container = document.getElementById('admin-materi-list');
+            container.innerHTML = '';
+
+            lessons.forEach(l => {
+                const mapelObj = subjects.find(s => s.id === l.subjectId);
+                const mapelName = mapelObj ? mapelObj.id.toUpperCase() : 'MAPEL';
+
+                const itemHtml = `
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs">
+                        <div class="min-w-0">
+                            <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${mapelName}</span>
+                            <h4 class="font-bold text-slate-800 mt-1 truncate">${l.title}</h4>
+                            <p class="text-[10px] text-slate-400 truncate">${l.chapter}</p>
+                        </div>
+                        <button onclick="deleteLessonFromAdmin('${l.id}')" class="bg-red-50 hover:bg-red-100 text-red-500 p-2 rounded-xl transition flex-shrink-0" title="Hapus materi">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+            lucide.createIcons();
+        }
+
+        // EVENT MENGHAPUS MATERI DARI PANEL ADMIN
+        function deleteLessonFromAdmin(lessonId) {
+            // Filter hapus dari array lessons
+            lessons = lessons.filter(l => l.id !== lessonId);
+            
+            showToast("Materi telah berhasil dihapus dari sistem.", "success");
+            
+            // Perbarui interface
+            renderSubjectCards();
+            renderChaptersAndLessons();
+            renderAdminMateriList();
+            updateDashboardStats();
+
+            // Jika materi yang dihapus sedang dibuka, arahkan kembali ke placeholder
+            if (currentActiveLessonId === lessonId) {
+                document.getElementById('material-placeholder').classList.remove('hidden');
+                document.getElementById('material-details').classList.add('hidden');
+                currentActiveLessonId = null;
+            }
+        }
+    </script>
+</body>
+</html>
